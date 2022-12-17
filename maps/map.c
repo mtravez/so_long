@@ -6,14 +6,19 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/15 19:29:22 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/17 18:23:35 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
+/*This global constant holds the tuples to add to a x/y coordinate
+for each of the directions*/
 const int	g_directions[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
+/*This function reads the given path and transforms the contents of the 
+file into a two dimentional character matrix
+@param path path to the file*/
 char	**get_map_matrix(char *path)
 {
 	char	*line;
@@ -34,11 +39,28 @@ char	**get_map_matrix(char *path)
 	return (ft_split(altogether, '\n'));
 }
 
-void	adjacent(char **matrix, const int cell[2], t_list **queue)
+/*This function creates a new tuple with the corresponding
+variables as parameters
+@param x the x integer of the pair
+@param y the y integer of the pair*/
+t_par *newpar(int x, int y)
+{
+	t_par *par;
+
+	par = malloc(sizeof(t_par *));
+	par->x = x;
+	par->y = y;
+	return (par);
+}
+
+/*This function checks each adjacent cell to the given cell on 
+the matrix for a valid path and if it finds it, it will add it to the queue
+@param matrix the two dimensional matrix to be checked for valid cells
+@param cell the tuple that will be checked for adjacent valid cells
+@param queue the linked list that holds the valid cells*/
+void	adjacent(char **matrix, t_par *cell, t_list **queue)
 {
 	int			i;
-	int			a;
-	int			b;
 	int			rows;
 
 	rows = 0;
@@ -47,23 +69,25 @@ void	adjacent(char **matrix, const int cell[2], t_list **queue)
 	i = 0;
 	while (i < 4)
 	{
-		a = cell[0] + g_directions[i][0];
-		b = cell[1] + g_directions[i][1];
+		int a = g_directions[i][0] + cell->y;
+		int b = g_directions[i][1] + cell->x;
 		if (a >= 0 && b >= 0 && a < rows && b < ft_strlen(matrix[0])
 			&& matrix[a][b] != 'X' && matrix[a][b] != '1')
-		{
-			int par[2] = {a, b};
-			ft_lstadd_front(queue, ft_lstnew(par));
-		}
+			ft_lstadd_back(queue, ft_lstnew(newpar(b, a)));
 		i++;
 	}
 }
 
-int	is_path(char **matrix, int start[2], int end[2])
+/*This function checks to see if there is a path from the starting 
+point (start) to the end point (end) in the given matrix. It creates 
+a queue and adds the start point to it. It then iterates through the queue, 
+marking off each point it visits with an 'X' and adding any adjacent points
+to the queue. If it reaches the end point, it returns 1, otherwise it returns 0.*/
+int	is_path(char **matrix, t_par *start, t_par *end)
 {
-	t_list *queue;
-	int		number[2];
-	int		*temp;
+	t_list	*queue;
+	t_par	*number;
+	t_par	*temp;
 	int		i;
 	char	**layout;
 
@@ -73,12 +97,11 @@ int	is_path(char **matrix, int start[2], int end[2])
 	while (queue)
 	{
 		i++;
-		temp = (int *) queue->content;
-		number[0] = temp[0];
-		number[1] = temp[1];
+		temp = (t_par *) queue->content;
+		number = newpar(temp->x, temp->y);
 		queue = queue->next;
-		layout[temp[0]][temp[1]] = 'X';
-		if (temp[0] == end[0] && temp[1] == end[1])
+		layout[temp->y][temp->x] = 'X';
+		if (temp->x == end->x && temp->y == end->y)
 			return (1);
 		adjacent(layout, number, &queue);
 	}
@@ -97,6 +120,7 @@ t_map	*is_correct(char **matrix)
 	rows = 0;
 	map->layout = ft_matrdup(matrix);
 	map->width = ft_strlen(matrix[0]);
+	map->coll = get_collectibles(matrix);
 	while (matrix[rows])
 		if (ft_strlen(matrix[rows++]) != map->width)
 		{
@@ -111,28 +135,22 @@ t_map	*is_correct(char **matrix)
 			perror("Error, the walls aren't surrounding the map");
 			return (NULL);
 		}
-	i = 0;
-	while (matrix[i])
+	if (!check_chars(map))
 	{
-		j = 0;
-		while (matrix[i][j])
-		{
-			if (matrix[i][j] == 'P')
-			{
-				map->player[0] = i;
-				map->player[1] = j;
-			}
-			if (matrix[i][j] == 'E')
-			{
-				map->exit[0] = i;
-				map->exit[1] = j;
-			}
-			j++;;
-		}
-		i++;
+		ft_printf("hi");
+		return (NULL);
 	}
+	get_exit_player(&map);
 	if (!is_path(matrix, map->player, map->exit))
+	{
 		perror("Error, invalid path");
+		return (NULL);
+	}
+	if (!is_path_coll(map))
+	{
+		perror("Error, not all collectibles are reachabe");
+		return (NULL);
+	}
 	return (map);
 }
 
@@ -140,19 +158,7 @@ int	works(char *path)
 {
 	char **matrix = get_map_matrix(path);
 	t_map *map = is_correct(matrix);
-	if (!map)
+	if (map == NULL)
 		return (0);
-	int i = 0;
-	while (matrix[i])
-	{
-		int j = 0;
-		while (matrix[i][j])
-		{
-			ft_printf("%c ", matrix[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
 	return (1);
 }

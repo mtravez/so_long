@@ -6,13 +6,13 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2022/12/15 19:25:41 by mtravez          ###   ########.fr        #
+#    Updated: 2022/12/16 14:52:00 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=so_long.a
 
-SRC=so_long.c map_check.c errors.c map_utils.c maps/map.c maps/extra_functions.c maps/check.c
+SRC=so_long.c errors.c maps/map.c maps/extra_functions.c maps/check.c
 
 OBJ=$(SRC:.c=.o)
 
