@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:51:08 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/17 18:01:52 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:20:15 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ t_collectible	*new_collectible(int x, int y)
 
 t_list	*get_collectibles(char **map)
 {
-	int				i;
-	int				j;
-	t_list 			*collect;
+	int		i;
+	int		j;
+	t_list	*collect;
+	t_collectible	*temp;
 
 	collect = NULL;
+	temp = NULL;
 	i = 0;
 	while (map[i])
 	{
@@ -60,7 +62,10 @@ t_list	*get_collectibles(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'C')
-				ft_lstadd_back(&collect, ft_lstnew(new_collectible(j, i)));
+			{
+				temp = new_collectible(j, i);
+				ft_lstadd_back(&collect, ft_lstnew(temp));
+			}
 			j++;
 		}
 		i++;
@@ -70,10 +75,9 @@ t_list	*get_collectibles(char **map)
 
 int	is_path_coll(t_map *map)
 {
-	t_list *temp;
-	t_collectible *current;
-	char	**layout;
-	int i = 0;
+	t_list			*temp;
+	t_collectible	*current;
+	char			**layout;
 
 	temp = map->coll;
 	while (temp)

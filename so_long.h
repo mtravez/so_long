@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/14 16:27:07 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/20 17:54:50 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ typedef struct s_player
 	int	collectibles;
 }	t_player;
 
-int		map_check(char *file);
 void	map_error(char *message);
-int		ft_ptr_strlen(char **strptr);
-char	**get_map(char *file);
-t_map	new_map();
+void	draw_map(void *mlx, t_map *map);
+int		is_correct(t_map **map);
+t_map	*get_map(char *path);
 #endif

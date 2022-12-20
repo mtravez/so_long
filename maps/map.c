@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/17 18:23:35 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:22:51 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ char	**get_map_matrix(char *path)
 	altogether = NULL;
 	line = get_next_line(fd);
 	if (!line)
+	{
 		perror("Error, invalid file");
+		return (NULL);
+	}
+		
 	while (line)
 	{
 		altogether = ft_strjoin_gnl(altogether, line);
@@ -43,9 +47,9 @@ char	**get_map_matrix(char *path)
 variables as parameters
 @param x the x integer of the pair
 @param y the y integer of the pair*/
-t_par *newpar(int x, int y)
+t_par	*newpar(int x, int y)
 {
-	t_par *par;
+	t_par	*par;
 
 	par = malloc(sizeof(t_par *));
 	par->x = x;
@@ -60,8 +64,10 @@ the matrix for a valid path and if it finds it, it will add it to the queue
 @param queue the linked list that holds the valid cells*/
 void	adjacent(char **matrix, t_par *cell, t_list **queue)
 {
-	int			i;
-	int			rows;
+	int	i;
+	int	rows;
+	int	a;
+	int	b;
 
 	rows = 0;
 	while (matrix[rows])
@@ -69,8 +75,8 @@ void	adjacent(char **matrix, t_par *cell, t_list **queue)
 	i = 0;
 	while (i < 4)
 	{
-		int a = g_directions[i][0] + cell->y;
-		int b = g_directions[i][1] + cell->x;
+		a = g_directions[i][0] + cell->y;
+		b = g_directions[i][1] + cell->x;
 		if (a >= 0 && b >= 0 && a < rows && b < ft_strlen(matrix[0])
 			&& matrix[a][b] != 'X' && matrix[a][b] != '1')
 			ft_lstadd_back(queue, ft_lstnew(newpar(b, a)));
@@ -78,11 +84,13 @@ void	adjacent(char **matrix, t_par *cell, t_list **queue)
 	}
 }
 
-/*This function checks to see if there is a path from the starting 
-point (start) to the end point (end) in the given matrix. It creates 
-a queue and adds the start point to it. It then iterates through the queue, 
-marking off each point it visits with an 'X' and adding any adjacent points
-to the queue. If it reaches the end point, it returns 1, otherwise it returns 0.*/
+/*This function checks to see if there is a path from
+the starting point (start) to the end point (end) in the
+given matrix. It creates a queue and adds the start point
+to it. It then iterates through the queue, marking off
+each point it visits with an 'X' and adding any adjacent points
+to the queue. If it reaches the end point,
+it returns 1, otherwise it returns 0.*/
 int	is_path(char **matrix, t_par *start, t_par *end)
 {
 	t_list	*queue;
@@ -109,56 +117,84 @@ int	is_path(char **matrix, t_par *start, t_par *end)
 	return (0);
 }
 
-t_map	*is_correct(char **matrix)
+int	is_correct(t_map **map)
 {
 	int		rows;
 	int		j;
 	int		i;
-	t_map	*map;
 
-	map = malloc(sizeof(t_map));
 	rows = 0;
-	map->layout = ft_matrdup(matrix);
-	map->width = ft_strlen(matrix[0]);
-	map->coll = get_collectibles(matrix);
-	while (matrix[rows])
-		if (ft_strlen(matrix[rows++]) != map->width)
+	while ((*map)->layout[rows])
+		if (ft_strlen((*map)->layout[rows++]) != (*map)->width)
 		{
-			perror("Error, the map isn't rectangular");
-			return (NULL);
+			perror("Error, the (*map) isn't rectangular");
+			return (0);
 		}
-	map->length = rows;
 	j = 0;
-	while (matrix[0][j])
-		if (matrix[0][j++] != '1')
+	while ((*map)->layout[0][j])
+		if ((*map)->layout[0][j++] != '1')
 		{
-			perror("Error, the walls aren't surrounding the map");
-			return (NULL);
+			perror("Error, the walls aren't surrounding the (*map)");
+			return (0);
 		}
-	if (!check_chars(map))
+	if (!check_chars((*map)))
 	{
-		ft_printf("hi");
-		return (NULL);
+		return (0);
 	}
-	get_exit_player(&map);
-	if (!is_path(matrix, map->player, map->exit))
+	get_exit_player(map);
+	if (!is_path((*map)->layout, (*map)->player, (*map)->exit))
 	{
 		perror("Error, invalid path");
-		return (NULL);
+		return (0);
 	}
-	if (!is_path_coll(map))
+	if (!is_path_coll((*map)))
 	{
 		perror("Error, not all collectibles are reachabe");
-		return (NULL);
+		return (0);
 	}
-	return (map);
+	return (1);
+}
+
+t_map	*get_map(char *path)
+{
+	t_map	*map;
+	char	**matrix;
+	int		i;
+
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	matrix = get_map_matrix(path);
+	i = 0;
+	while (matrix[i])
+		i++;
+	map->layout = ft_matrdup(matrix);
+	map->width = ft_strlen(matrix[0]);
+	map->length = i;
+	map->coll = get_collectibles(matrix);
+	get_exit_player(&map);
+	if (is_correct(&map))
+	{
+		ft_printf("worked!");
+		return (map);
+	}
+	else
+		return (NULL);
 }
 
 int	works(char *path)
 {
 	char **matrix = get_map_matrix(path);
-	t_map *map = is_correct(matrix);
-	if (map == NULL)
+	if (matrix == NULL)
+	{
+		perror("Error, wrong file path");
 		return (0);
+	}
+	t_map *map = get_map(path);
+	if (!map)
+	{
+		perror("Error, map didn't create");
+		return (0);
+	}
 	return (1);
 }

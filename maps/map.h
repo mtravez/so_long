@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:58:05 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/17 18:01:18 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:11:07 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_map
 
 typedef struct s_collectible
 {
-	t_par	*coor;
+	void	*coor;
 	int collected;
 }	t_collectible;
 
