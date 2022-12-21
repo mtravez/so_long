@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 18:39:41 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 18:20:27 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/20 20:25:59 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	check_chars(t_map *map)
 		ft_printf("wrong number of exits\n");
 		return (0);
 	}
-	if (how_many_chars(map->layout, 'P' != 1))
+	if (how_many_chars(map->layout, 'P')!= 1)
 	{
 		ft_printf("wrong number of player\n");
 		return (0);

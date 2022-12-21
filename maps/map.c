@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 18:22:51 by mtravez          ###   ########.fr       */
+/*   Updated: 2022/12/20 20:37:58 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,14 @@ int	is_correct(t_map **map)
 		}
 	j = 0;
 	while ((*map)->layout[0][j])
-		if ((*map)->layout[0][j++] != '1')
+		if ((*map)->layout[0][j] != '1' || (*map)->layout[rows - 1][j++] != '1')
+		{
+			perror("Error, the walls aren't surrounding the (*map)");
+			return (0);
+		}
+	j = 0;
+	while ((*map)->layout[j])
+		if ((*map)->layout[j][0] != '1' || (*map)->layout[j++][(*map)->width - 1] != '1')
 		{
 			perror("Error, the walls aren't surrounding the (*map)");
 			return (0);
@@ -141,7 +148,6 @@ int	is_correct(t_map **map)
 	{
 		return (0);
 	}
-	get_exit_player(map);
 	if (!is_path((*map)->layout, (*map)->player, (*map)->exit))
 	{
 		perror("Error, invalid path");
@@ -171,8 +177,8 @@ t_map	*get_map(char *path)
 	map->layout = ft_matrdup(matrix);
 	map->width = ft_strlen(matrix[0]);
 	map->length = i;
-	map->coll = get_collectibles(matrix);
 	get_exit_player(&map);
+	map->coll = get_collectibles(matrix);
 	if (is_correct(&map))
 	{
 		ft_printf("worked!");
