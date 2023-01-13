@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/21 19:37:07 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/13 13:45:36 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	map = get_map("map.ber");
 	if (!map)
 		return(0);
-	mlx = mlx_init(500, 500, "testing", true);
+	mlx = mlx_init(map->width * 32 + 15, map->length * 32 + 15, "my game", true);
 	if (!mlx)
 		exit(EXIT_FAILURE);
 
@@ -138,11 +138,11 @@ int main(int argc, char **argv)
 	
 	
 	// Zorrito
-	texture = mlx_load_png("resources/bicho.png");
-	g_img = mlx_texture_to_image(mlx, texture);
-	mlx_image_to_window(mlx, g_img, 0, 0);
-	mlx_loop_hook(mlx, &hook, mlx);
-	mlx_loop_hook(mlx, &move, mlx);
+	// texture = mlx_load_png("resources/bicho.png");
+	// g_img = mlx_texture_to_image(mlx, texture);
+	// mlx_image_to_window(mlx, g_img, 0, 0);
+	// mlx_loop_hook(mlx, &hook, mlx);
+	// mlx_loop_hook(mlx, &move, mlx);
 	
 	// Fence
 	// texture = mlx_load_png("resources/fence.png");

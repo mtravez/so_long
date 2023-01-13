@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:22:06 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/21 17:55:47 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/13 13:41:24 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #define TILE_LENGTH 32
 
 mlx_image_t *temp_tiles;
+mlx_image_t *player_fox;
+
+void	set_fox(void *mlx, t_map *map)
+{
+	mlx_texture_t *texture = mlx_load_png("resources/bicho.png");
+	player_fox = mlx_texture_to_image(mlx, texture);
+	mlx_image_to_window(mlx, player_fox, map->player->x * TILE_WIDTH, map->player->y * TILE_LENGTH);
+}
 
 void	draw_map(void *mlx, t_map *map)
 {
@@ -34,7 +42,7 @@ void	draw_map(void *mlx, t_map *map)
 		}
 		i++;
 	}
-	
+	set_fox(mlx, map);
 	i = 0;
 	texture = mlx_load_png("resources/fence_v.png");
 	temp_tiles = mlx_texture_to_image(mlx, texture);
