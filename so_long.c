@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/13 18:04:00 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/13 19:15:05 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,31 +120,7 @@ int main(int argc, char **argv)
 	game->total_col = ft_lstsize(map->coll);
 	game->player = player;
 	
-	// getchar();
-	// ft_printf("hello");
-	// draw_map(mlx, map);
-	// texture = mlx_load_png("resources/fence.png");
-	// // ft_printf("%i, ", map->width);
-	// mlx_image_t *tiles = mlx_texture_to_image(mlx, texture);
-	// int i = 0;
-	// while(i < map->width)
-	// {
-	// 	mlx_image_to_window(mlx, tiles, i * 32, 0);
-	// 	mlx_image_to_window(mlx, tiles, i * 32, map->length * 32);
-	// 	i++;
-	// }
-
-	// i = 1;
-	// texture = mlx_load_png("resources/fence_v.png");
-	// tiles = mlx_texture_to_image(mlx, texture);
-	// while(i < map->length - 1)
-	// {
-	// 	mlx_image_to_window(mlx, tiles, 0, (i * 45) - 25);
-	// 	mlx_image_to_window(mlx, tiles, map->width * 31, (i * 45) - 25);
-	// 	i++;
-	// }
 	draw_all(game->mlx, map);
-	
 	
 	// Zorrito
 	// texture = mlx_load_png("resources/bicho.png");

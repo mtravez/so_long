@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 20:37:58 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/13 18:47:49 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,17 @@ int	is_correct(t_map **map)
 
 	rows = 0;
 	while ((*map)->layout[rows])
-		if (ft_strlen((*map)->layout[rows++]) != (*map)->width)
+	{
+		if (ft_strlen((*map)->layout[rows]) != (*map)->width)
 		{
-			perror("Error, the (*map) isn't rectangular");
+			perror("Error, the map isn't rectangular");
+			// ft_printf("%i, %i, %i", ft_strlen((*map)->layout[rows]), (*map)->width, rows - 1);
+			// ft_printf("%s", (*map)->layout[2]);
 			return (0);
 		}
+		rows++;
+	}
+		
 	j = 0;
 	while ((*map)->layout[0][j])
 		if ((*map)->layout[0][j] != '1' || (*map)->layout[rows - 1][j++] != '1')
