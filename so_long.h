@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 17:54:50 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/13 16:54:28 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,30 @@
 # include <errno.h>
 # include <stdio.h>
 
+#define H_FENCE "resources/fence.png"
+#define V_FENCE "resources/fence_v.png"
+#define GRASS "resources/grass.png"
+#define BUSH "resources/bush.png"
+#define CHICKEN "resources/chicken.png"
+#define EXIT "resources/chest.png"
+#define Z_D "resources/bicho.png"
+
 typedef struct s_player
 {
 	mlx_image_t *image;
 	int	collectibles;
 }	t_player;
 
+typedef struct s_game
+{
+	void *mlx;
+	t_player *player;
+	int total_col;
+	int steps;
+}	t_game;
+
 void	map_error(char *message);
+void	draw_all(void *mlx, t_map *map);
 void	draw_map(void *mlx, t_map *map);
 int		is_correct(t_map **map);
 t_map	*get_map(char *path);

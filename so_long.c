@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/13 13:45:36 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/13 18:04:00 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,27 @@ void move(void *param)
 
 int main(int argc, char **argv)
 {
-	mlx_t	*mlx;
 	mlx_texture_t *texture;
 	t_map	*map;
+	t_game *game;
+	t_player *player;
 
 	// Vorbereitung of MLX
 	map = get_map("map.ber");
-	if (!map)
+	game = malloc(sizeof(t_game));
+	player = malloc(sizeof(t_player));
+	if (!map || !game || !player)
 		return(0);
-	mlx = mlx_init(map->width * 32 + 15, map->length * 32 + 15, "my game", true);
-	if (!mlx)
+	game->mlx = mlx_init(map->width * 32 + 15, map->length * 32 + 15, "my game", true);
+	if (!game->mlx)
 		exit(EXIT_FAILURE);
-
+	texture = mlx_load_png(Z_D);
+	player->image = mlx_texture_to_image(game->mlx, texture);
+	player->collectibles = 0;
+	game->steps = 0;
+	game->total_col = ft_lstsize(map->coll);
+	game->player = player;
+	
 	// getchar();
 	// ft_printf("hello");
 	// draw_map(mlx, map);
@@ -134,7 +143,7 @@ int main(int argc, char **argv)
 	// 	mlx_image_to_window(mlx, tiles, map->width * 31, (i * 45) - 25);
 	// 	i++;
 	// }
-	draw_map(mlx, map);
+	draw_all(game->mlx, map);
 	
 	
 	// Zorrito
@@ -151,8 +160,8 @@ int main(int argc, char **argv)
 	// mlx_loop_hook(mlx, &hook2, mlx);
 	
 	// Looping and exit
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop(game->mlx);
+	mlx_terminate(game->mlx);
 	return (EXIT_SUCCESS);
 	
 	ft_printf("%i", works("map.ber"));
