@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/13 18:47:49 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 16:24:25 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**get_map_matrix(char *path)
 	char	*line;
 	int		fd;
 	char	*altogether;
+	char	**matrix;
 
 	fd = open(path, O_RDONLY);
 	altogether = NULL;
@@ -33,28 +34,15 @@ char	**get_map_matrix(char *path)
 		perror("Error, invalid file");
 		return (NULL);
 	}
-		
 	while (line)
 	{
 		altogether = ft_strjoin_gnl(altogether, line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return (ft_split(altogether, '\n'));
-}
-
-/*This function creates a new tuple with the corresponding
-variables as parameters
-@param x the x integer of the pair
-@param y the y integer of the pair*/
-t_par	*newpar(int x, int y)
-{
-	t_par	*par;
-
-	par = malloc(sizeof(t_par *));
-	par->x = x;
-	par->y = y;
-	return (par);
+	matrix = ft_split(altogether, '\n');
+	free(altogether);
+	return (matrix);
 }
 
 /*This function checks each adjacent cell to the given cell on 
@@ -94,26 +82,27 @@ it returns 1, otherwise it returns 0.*/
 int	is_path(char **matrix, t_par *start, t_par *end)
 {
 	t_list	*queue;
-	t_par	*number;
 	t_par	*temp;
-	int		i;
 	char	**layout;
 
 	layout = ft_matrdup(matrix);
-	queue = ft_lstnew(start);
-	i = 0;
+	queue = ft_lstnew(newpar(start->x, start->y));
 	while (queue)
 	{
-		i++;
-		temp = (t_par *) queue->content;
-		number = newpar(temp->x, temp->y);
-		queue = queue->next;
+		temp = (t_par *) ft_lstpop(&queue);
 		layout[temp->y][temp->x] = 'X';
 		if (temp->x == end->x && temp->y == end->y)
+		{
+			free(temp);
+			free_list(queue);
+			free_matrix(layout);
 			return (1);
-		adjacent(layout, number, &queue);
+		}
+		adjacent(layout, temp, &queue);
+		free(temp);
 	}
-	free(layout);
+	free_matrix(layout);
+	free_list(queue);
 	return (0);
 }
 
@@ -129,31 +118,26 @@ int	is_correct(t_map **map)
 		if (ft_strlen((*map)->layout[rows]) != (*map)->width)
 		{
 			perror("Error, the map isn't rectangular");
-			// ft_printf("%i, %i, %i", ft_strlen((*map)->layout[rows]), (*map)->width, rows - 1);
-			// ft_printf("%s", (*map)->layout[2]);
 			return (0);
 		}
 		rows++;
 	}
-		
 	j = 0;
 	while ((*map)->layout[0][j])
 		if ((*map)->layout[0][j] != '1' || (*map)->layout[rows - 1][j++] != '1')
 		{
-			perror("Error, the walls aren't surrounding the (*map)");
+			ft_printf("Error, the walls aren't surrounding the map");
 			return (0);
 		}
 	j = 0;
 	while ((*map)->layout[j])
 		if ((*map)->layout[j][0] != '1' || (*map)->layout[j++][(*map)->width - 1] != '1')
 		{
-			perror("Error, the walls aren't surrounding the (*map)");
+			perror("Error, the walls aren't surrounding the map");
 			return (0);
 		}
 	if (!check_chars((*map)))
-	{
 		return (0);
-	}
 	if (!is_path((*map)->layout, (*map)->player, (*map)->exit))
 	{
 		perror("Error, invalid path");
@@ -162,50 +146,6 @@ int	is_correct(t_map **map)
 	if (!is_path_coll((*map)))
 	{
 		perror("Error, not all collectibles are reachabe");
-		return (0);
-	}
-	return (1);
-}
-
-t_map	*get_map(char *path)
-{
-	t_map	*map;
-	char	**matrix;
-	int		i;
-
-	map = malloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
-	matrix = get_map_matrix(path);
-	i = 0;
-	while (matrix[i])
-		i++;
-	map->layout = ft_matrdup(matrix);
-	map->width = ft_strlen(matrix[0]);
-	map->length = i;
-	get_exit_player(&map);
-	map->coll = get_collectibles(matrix);
-	if (is_correct(&map))
-	{
-		ft_printf("worked!");
-		return (map);
-	}
-	else
-		return (NULL);
-}
-
-int	works(char *path)
-{
-	char **matrix = get_map_matrix(path);
-	if (matrix == NULL)
-	{
-		perror("Error, wrong file path");
-		return (0);
-	}
-	t_map *map = get_map(path);
-	if (!map)
-	{
-		perror("Error, map didn't create");
 		return (0);
 	}
 	return (1);

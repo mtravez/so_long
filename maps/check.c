@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:51:08 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 18:20:15 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 16:06:56 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,6 @@ int	how_many_chars(char **matrix, char c)
 	return (count);
 }
 
-t_collectible	*new_collectible(int x, int y)
-{
-	t_collectible	*newone;
-
-	newone = malloc(sizeof(t_collectible *));
-	if (!newone)
-		return (NULL);
-	newone->coor = newpar(x, y);
-	newone->collected = 0;
-	return (newone);
-}
-
-t_list	*get_collectibles(char **map)
-{
-	int		i;
-	int		j;
-	t_list	*collect;
-	t_collectible	*temp;
-
-	collect = NULL;
-	temp = NULL;
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'C')
-			{
-				temp = new_collectible(j, i);
-				ft_lstadd_back(&collect, ft_lstnew(temp));
-			}
-			j++;
-		}
-		i++;
-	}
-	return (collect);
-}
-
 int	is_path_coll(t_map *map)
 {
 	t_list			*temp;
@@ -85,9 +46,12 @@ int	is_path_coll(t_map *map)
 		layout = ft_matrdup(map->layout);
 		current = temp->content;
 		if (!is_path(layout, map->player, current->coor))
+		{
+			free_matrix(layout);
 			return (0);
+		}
 		temp = temp->next;
-		free(layout);
+		free_matrix(layout);
 	}
 	return (1);
 }
@@ -95,21 +59,24 @@ int	is_path_coll(t_map *map)
 char	**ft_matrdup(char **matrix)
 {
 	char	**dup;
-	int		rows;
-	int		columns;
+	int		i;
+	char	*altogether;
+	char	*temp;
 
-	rows = 0;
-	while (matrix[rows])
-		rows++;
-	columns = ft_strlen(matrix[0]);
-	dup = malloc(columns * rows);
-	if (!dup)
-		return (NULL);
-	rows = 0;
-	while (matrix[rows])
+	i = 0;
+	altogether = ft_strdup("");
+	while (matrix[i])
 	{
-		dup[rows] = ft_strdup(matrix[rows]);
-		rows++;
+		temp = ft_strjoin(altogether, matrix[i]);
+		if (matrix[i + 1])
+		{
+			free(altogether);
+			altogether = ft_strjoin_gnl(temp, ft_strdup(" "));
+		}
+		i++;
 	}
+	dup = ft_split(temp, ' ');
+	free(temp);
+	free(altogether);
 	return (dup);
 }

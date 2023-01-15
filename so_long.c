@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/13 19:15:05 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 16:29:23 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,13 @@ int main(int argc, char **argv)
 	t_player *player;
 
 	// Vorbereitung of MLX
-	map = get_map("map.ber");
+	if(argc != 2 || ft_strlen(argv[1]) < 5 || ft_strncmp(&argv[1][ft_strlen(argv[1] - 4)], ".ber", 5) != 0)
+	{
+		ft_printf("Invalid path");
+		return (0);
+	}
+	map = get_map(argv[1]);
+	
 	game = malloc(sizeof(t_game));
 	player = malloc(sizeof(t_player));
 	if (!map || !game || !player)
@@ -122,24 +128,29 @@ int main(int argc, char **argv)
 	
 	draw_all(game->mlx, map);
 	
-	// Zorrito
-	// texture = mlx_load_png("resources/bicho.png");
-	// g_img = mlx_texture_to_image(mlx, texture);
-	// mlx_image_to_window(mlx, g_img, 0, 0);
-	// mlx_loop_hook(mlx, &hook, mlx);
-	// mlx_loop_hook(mlx, &move, mlx);
+	// // Zorrito
+	// // texture = mlx_load_png("resources/bicho.png");
+	// // g_img = mlx_texture_to_image(mlx, texture);
+	// // mlx_image_to_window(mlx, g_img, 0, 0);
+	// // mlx_loop_hook(mlx, &hook, mlx);
+	// // mlx_loop_hook(mlx, &move, mlx);
 	
-	// Fence
-	// texture = mlx_load_png("resources/fence.png");
-	// g_img2 = mlx_texture_to_image(mlx, texture);
-	// mlx_image_to_window(mlx, g_img2, 90, 90);
-	// mlx_loop_hook(mlx, &hook2, mlx);
+	// // Fence
+	// // texture = mlx_load_png("resources/fence.png");
+	// // g_img2 = mlx_texture_to_image(mlx, texture);
+	// // mlx_image_to_window(mlx, g_img2, 90, 90);
+	// // mlx_loop_hook(mlx, &hook2, mlx);
 	
-	// Looping and exit
+	// // Looping and exit
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
+	if (map)
+		ft_free_map(map);
+	// free_matrix(map->layout);
+	// free(map);
+	// system("leaks a.out");
 	return (EXIT_SUCCESS);
 	
-	ft_printf("%i", works("map.ber"));
+	// ft_printf("%i", works("map.ber"));
 	return(0);
 }

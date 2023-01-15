@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:22:06 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/13 19:57:26 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/14 14:59:51 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_player_and_exit(void *mlx, t_map *map)
 {
 	mlx_texture_t *texture = mlx_load_png("resources/bicho.png");
 	player_fox = mlx_texture_to_image(mlx, texture);
-	mlx_image_to_window(mlx, player_fox, map->player->x * TILE_WIDTH + TILE_WIDTH / 2 \
+	mlx_image_to_window(mlx, player_fox, map->player->x * TILE_WIDTH \
 		, map->player->y * TILE_LENGTH + TILE_LENGTH);
 	texture = mlx_load_png(EXIT);
 	temp_tiles = mlx_texture_to_image(mlx, texture);
@@ -87,14 +87,14 @@ void	draw_all(void *mlx, t_map *map)
 				mlx_texture_t *texture = mlx_load_png(BUSH);
 				temp_tiles = mlx_texture_to_image(mlx, texture);
 				mlx_image_to_window(mlx, temp_tiles, j * TILE_WIDTH + TILE_WIDTH / 2 \
-				, (i - 1) * TILE_LENGTH + (i - 1) * 5);
+				, (i - 1) * TILE_LENGTH + (i) * 10);
 			}
 			if (c == 'C')
 			{
 				mlx_texture_t *texture = mlx_load_png(CHICKEN);
 				temp_tiles = mlx_texture_to_image(mlx, texture);
-				mlx_image_to_window(mlx, temp_tiles, j * TILE_WIDTH + TILE_WIDTH / 2 \
-				, i * TILE_LENGTH + TILE_LENGTH);
+				mlx_image_to_window(mlx, temp_tiles, j * TILE_WIDTH \
+				, i * TILE_LENGTH);
 			}
 			j++;
 		}

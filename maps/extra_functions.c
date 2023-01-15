@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 18:39:41 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 20:25:59 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 16:26:47 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,11 @@ int	check_paths(t_map *map)
 	return (1);
 }
 
-void	get_exit_player(t_map **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while ((*map)->layout[i])
-	{
-		j = 0;
-		while ((*map)->layout[i][j])
-		{
-			if ((*map)->layout[i][j] == 'P')
-				(*map)->player = newpar(j, i);
-			if ((*map)->layout[i][j] == 'E')
-				(*map)->exit = newpar(j, i);
-			j++;
-		}
-		i++;
-	}
-}
-
 int	analize_chars(char **matrix, char *chars)
 {
 	int	i;
 	int	j;
 	int	k;
-	int	correct;
 
 	i = 0;
 	while (matrix[i])
@@ -61,17 +39,13 @@ int	analize_chars(char **matrix, char *chars)
 		while (matrix[i][j])
 		{
 			k = 0;
-			correct = 0;
-			while (!correct)
+			while (chars[k])
 			{
 				if (matrix[i][j] == chars[k])
-					correct = 1;
-				else
-					k++;
+					break ;
 				if (!chars[k])
-				{
 					return (0);
-				}
+				k++;
 			}
 			j++;
 		}
@@ -92,7 +66,7 @@ int	check_chars(t_map *map)
 		ft_printf("wrong number of exits\n");
 		return (0);
 	}
-	if (how_many_chars(map->layout, 'P')!= 1)
+	if (how_many_chars(map->layout, 'P') != 1)
 	{
 		ft_printf("wrong number of player\n");
 		return (0);
@@ -138,4 +112,18 @@ void	printlist(t_list *list)
 		temp = temp->next;
 	}
 	ft_printf("\n");
+}
+
+void	*ft_lstpop(t_list **list)
+{
+	void	*content;
+	t_list	*head;
+
+	if (!list || !*list)
+		return (NULL);
+	head = *list;
+	*list = (*list)->next;
+	content = head->content;
+	free(head);
+	return (content);
 }

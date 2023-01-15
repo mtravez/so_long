@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/13 16:54:28 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 15:28:55 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,8 @@ void	draw_all(void *mlx, t_map *map);
 void	draw_map(void *mlx, t_map *map);
 int		is_correct(t_map **map);
 t_map	*get_map(char *path);
+void	free_matrix(char **matrix);
+void	free_list(t_list *head);
+void	ft_free_map(t_map *map);
+void	*ft_lstpop(t_list **list);
 #endif

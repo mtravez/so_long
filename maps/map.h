@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:58:05 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/20 18:11:07 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 16:11:59 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,19 @@ typedef struct s_collectible
 	int collected;
 }	t_collectible;
 
-t_par	*newpar(int x, int y);
-int		works(char *path);
-int		is_path(char **matrix, t_par *start, t_par *end);
-int		is_path_coll(t_map *map);
-int		how_many_chars(char **matrix, char c);
-char	**ft_matrdup(char **matrix);
-int		check_chars(t_map *map);
-void	get_exit_player(t_map **map);
-t_list	*get_collectibles(char **map);
-void	print_matrix(char **matrix);//TODO remove
-void printlist(t_list *list);
+t_par			*newpar(int x, int y);
+t_map			*get_map(char *path);
+t_collectible	*new_collectible(int x, int y);
+t_list			*get_collectibles(char **map);
+void			get_exit_player(t_map **map);
+char			**get_map_matrix(char *path);
+int				is_path(char **matrix, t_par *start, t_par *end);
+int				is_path_coll(t_map *map);
+int				how_many_chars(char **matrix, char c);
+char			**ft_matrdup(char **matrix);
+int				check_chars(t_map *map);
+int				check_paths(t_map *map);
+void			print_matrix(char **matrix);//TODO remove
+void			printlist(t_list *list);
 
 #endif
