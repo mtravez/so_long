@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 16:29:23 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 20:21:10 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,16 @@ int main(int argc, char **argv)
 	game->mlx = mlx_init(map->width * 32 + 15, map->length * 32 + 15, "my game", true);
 	if (!game->mlx)
 		exit(EXIT_FAILURE);
-	texture = mlx_load_png(Z_D);
+	texture = mlx_load_png("resources/BichoRight.png");
 	player->image = mlx_texture_to_image(game->mlx, texture);
 	player->collectibles = 0;
+	texture = mlx_load_png(EXIT);
+	game->exit = mlx_texture_to_image(game->mlx, texture);
 	game->steps = 0;
 	game->total_col = ft_lstsize(map->coll);
 	game->player = player;
 	
-	draw_all(game->mlx, map);
+	draw_all(map, game);
 	
 	// // Zorrito
 	// // texture = mlx_load_png("resources/bicho.png");

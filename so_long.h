@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 15:28:55 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/15 20:21:00 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define GRASS "resources/grass.png"
 #define BUSH "resources/bush.png"
 #define CHICKEN "resources/chicken.png"
-#define EXIT "resources/chest.png"
+#define EXIT "resources/HoleClose.png"
 #define Z_D "resources/bicho.png"
 
 typedef struct s_player
@@ -37,13 +37,13 @@ typedef struct s_game
 {
 	void *mlx;
 	t_player *player;
+	mlx_image_t	*exit;
 	int total_col;
 	int steps;
 }	t_game;
 
 void	map_error(char *message);
-void	draw_all(void *mlx, t_map *map);
-void	draw_map(void *mlx, t_map *map);
+void	draw_all(t_map *map, t_game *game);
 int		is_correct(t_map **map);
 t_map	*get_map(char *path);
 void	free_matrix(char **matrix);

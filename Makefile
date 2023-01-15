@@ -6,7 +6,7 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2023/01/15 16:24:56 by mtravez          ###   ########.fr        #
+#    Updated: 2023/01/15 20:01:23 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C libft
 	make -C MLX42
-	@cc $(OBJ) libft/libft.a MLX42/libmlx42.a -I include -lglfw -L "/Users/mtravez/.brew/opt/glfw/lib/"
+	@cc $(OBJ) -fsanitize=address libft/libft.a MLX42/libmlx42.a -I include -lglfw -L "/Users/mtravez/.brew/opt/glfw/lib/"
 	@ar rc $(NAME) $(OBJ) 
 
 clean:
