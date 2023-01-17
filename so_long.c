@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 20:21:10 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/17 19:02:13 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,44 @@ void hook(void *param)
 
 void hook2(void *param)
 {
-	mlx_t *mlx = param;
+	t_game *game = param;
 	
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		g_img2->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		g_img2->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		g_img2->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		g_img2->instances[0].x += 5;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(game->mlx);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
+		(game->player->image)->instances[0].y -= 5;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
+		(game->player->image)->instances[0].y += 5;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+		(game->player->image)->instances[0].x -= 5;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+		(game->player->image)->instances[0].x += 5;
+}
+
+void	test(mlx_key_data_t keycode, void *param)
+{
+	t_game *game = param;
+	
+	if (keycode.key == MLX_KEY_LEFT)
+		move_left(game);
+	if (keycode.key == MLX_KEY_RIGHT)
+		move_right(game);
+	if (keycode.key == MLX_KEY_UP)
+		move_up(game);
+		if (keycode.key == MLX_KEY_DOWN)
+		move_down(game);
 }
 
 void move(void *param)
 {
-	mlx_t *mlx = param;
+	t_game *game = param;
 	int x = g_img->instances[0].x;
 	int y = g_img->instances[0].y;
 	
-	if (mlx_is_key_down(mlx, MLX_KEY_SPACE))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_SPACE))
 	{
-		texture = mlx_load_png("resources/bicho.png");
-		mlx_draw_texture(g_img, texture, 10, 10);
+		// texture = mlx_load_png("resources/bicho.png");
+		// mlx_draw_texture(g_img, texture, 10, 10);
 		// texture = mlx_load_png("resources/bicho3.png");
 		// mlx_draw_texture(g_img, texture, g_img->instances[0].x, g_img->instances[0].y);
 		// texture = mlx_load_png("resources/bicho4.png");
@@ -119,6 +133,7 @@ int main(int argc, char **argv)
 	game->mlx = mlx_init(map->width * 32 + 15, map->length * 32 + 15, "my game", true);
 	if (!game->mlx)
 		exit(EXIT_FAILURE);
+	game->map = map;
 	texture = mlx_load_png("resources/BichoRight.png");
 	player->image = mlx_texture_to_image(game->mlx, texture);
 	player->collectibles = 0;
@@ -129,6 +144,7 @@ int main(int argc, char **argv)
 	game->player = player;
 	
 	draw_all(map, game);
+	mlx_key_hook(game->mlx, &test, game);
 	
 	// // Zorrito
 	// // texture = mlx_load_png("resources/bicho.png");
@@ -141,10 +157,10 @@ int main(int argc, char **argv)
 	// // texture = mlx_load_png("resources/fence.png");
 	// // g_img2 = mlx_texture_to_image(mlx, texture);
 	// // mlx_image_to_window(mlx, g_img2, 90, 90);
-	// // mlx_loop_hook(mlx, &hook2, mlx);
+	// mlx_loop_hook(game->mlx, &hook2, game);
 	
 	// // Looping and exit
-	mlx_loop(game->mlx);
+	mlx_loop(game->mlx);  
 	mlx_terminate(game->mlx);
 	if (map)
 		ft_free_map(map);

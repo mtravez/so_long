@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 20:21:00 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/17 19:00:47 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_player
 typedef struct s_game
 {
 	void *mlx;
+	t_map *map;
 	t_player *player;
 	mlx_image_t	*exit;
 	int total_col;
@@ -50,4 +51,8 @@ void	free_matrix(char **matrix);
 void	free_list(t_list *head);
 void	ft_free_map(t_map *map);
 void	*ft_lstpop(t_list **list);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
+void	move_up(t_game *game);
+void	move_down(t_game *game);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:22:06 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 20:25:29 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/17 18:53:53 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ mlx_image_t *temp_tiles;
 
 void	draw_player_and_exit(t_map *map, t_game *game)
 {
-	mlx_image_to_window(game->mlx, game->player->image, (map->player->x * TILE_WIDTH) + TILE_WIDTH / 2 \
-		, map->player->y * TILE_LENGTH + TILE_LENGTH / 2);
-	mlx_image_to_window(game->mlx, game->exit, map->exit->x * TILE_WIDTH + TILE_WIDTH / 2 \
-		, (map->exit->y) * TILE_LENGTH + TILE_LENGTH / 2);
+	mlx_image_to_window(game->mlx, game->player->image, (game->map->player->x * TILE_WIDTH) + TILE_WIDTH / 2 \
+		, game->map->player->y * TILE_LENGTH + TILE_LENGTH / 2);
+	mlx_image_to_window(game->mlx, game->exit, game->map->exit->x * TILE_WIDTH + TILE_WIDTH / 2 \
+		, (game->map->exit->y) * TILE_LENGTH + TILE_LENGTH / 2);
 }
 
 void	draw_ground(t_map *map, t_game *game)
