@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:56:26 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 14:46:52 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/19 15:50:27 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,6 @@ void	free_list_col(t_list *head)
 		temp = head;
 	}
 }
-// void	ft_free_player(t_player *player)
-// {
-// 	if (player)
-// 	{
-// 		ft_free(player->collectibles);
-// 		ft_free(player->image);
-// 	}
-// 	ft_free(player);
-// }
-
-// void	ft_free_collectible(t_collectible *col)
-// {
-// 	if (col)
-// 	{
-// 		ft_free(col->collected);
-// 		ft_free_par(col->coor);
-// 	}
-// 	ft_free(col);
-// }
 
 void	ft_free_map(t_map *map)
 {
@@ -92,4 +73,26 @@ void	ft_free_map(t_map *map)
 	// free(map->length);
 	// free(map->width);
 	free(map);
+}
+
+void free_game(t_game *game)
+{
+	mlx_delete_image(game->mlx, game->exit[0]);
+	mlx_delete_image(game->mlx, game->exit[1]);
+	free(game->exit);
+	mlx_delete_image(game->mlx, game->player->image[0]);
+	mlx_delete_image(game->mlx, game->player->image[1]);
+	mlx_delete_image(game->mlx, game->player->image[2]);
+	mlx_delete_image(game->mlx, game->player->image[3]);
+	free(game->player->image);
+	free(game->player);
+	mlx_delete_image(game->mlx, game->map_image[0]);
+	mlx_delete_image(game->mlx, game->map_image[1]);
+	mlx_delete_image(game->mlx, game->map_image[2]);
+	mlx_delete_image(game->mlx, game->map_image[3]);
+	mlx_delete_image(game->mlx, game->map_image[4]);
+	free(game->map_image);
+	ft_free_map(game->map);
+	// mlx_terminate(game->mlx);
+	free(game);
 }
