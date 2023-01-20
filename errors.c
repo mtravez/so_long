@@ -6,14 +6,14 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:53:55 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/12 15:01:34 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:43:29 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	map_error(char *message)
+int	map_error(char *message)
 {
-	perror(message);
-	exit (0);
+	ft_printf(message);
+	return (0);
 }

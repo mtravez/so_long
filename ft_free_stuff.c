@@ -6,19 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:56:26 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/19 15:50:27 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/20 15:58:00 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	ft_free(void *content)
-{
-	if (content)
-		free(content);
-	content = NULL;
-}
-
 
 void	free_matrix(char **matrix)
 {
@@ -35,7 +27,7 @@ void	free_matrix(char **matrix)
 
 void	free_list(t_list *head)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = head;
 	while (temp != NULL)
@@ -66,16 +58,19 @@ void	free_list_col(t_list *head)
 
 void	ft_free_map(t_map *map)
 {
-	free_list_col(map->coll);
-	free(map->exit);
-	free(map->player);
-	free_matrix(map->layout);
-	// free(map->length);
-	// free(map->width);
-	free(map);
+	if (map->coll)
+		free_list_col(map->coll);
+	if (map->exit != NULL)
+		free(map->exit);
+	if (map->player != NULL)
+		free(map->player);
+	if (map->layout)
+		free_matrix(map->layout);
+	if (map)
+		free(map);
 }
 
-void free_game(t_game *game)
+void	free_game(t_game *game)
 {
 	mlx_delete_image(game->mlx, game->exit[0]);
 	mlx_delete_image(game->mlx, game->exit[1]);
@@ -93,6 +88,5 @@ void free_game(t_game *game)
 	mlx_delete_image(game->mlx, game->map_image[4]);
 	free(game->map_image);
 	ft_free_map(game->map);
-	// mlx_terminate(game->mlx);
 	free(game);
 }

@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 18:39:41 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 16:26:47 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:57:05 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,61 +57,14 @@ int	analize_chars(char **matrix, char *chars)
 int	check_chars(t_map *map)
 {
 	if (!analize_chars(map->layout, "01CPE"))
-	{
-		ft_printf("extra char\n");
-		return (0);
-	}
+		return (map_error("Error, there's an invalid char in map\n"));
 	if (how_many_chars(map->layout, 'E') != 1)
-	{
-		ft_printf("wrong number of exits\n");
-		return (0);
-	}
+		return (map_error("Error, wrong number of exits\n"));
 	if (how_many_chars(map->layout, 'P') != 1)
-	{
-		ft_printf("wrong number of player\n");
-		return (0);
-	}
+		return (map_error("Error, wrong number of player\n"));
 	if (!how_many_chars(map->layout, 'C'))
-	{
-		ft_printf("not enough collectibles\n");
-		return (0);
-	}
+		return (map_error("Error, not enough collectibles\n"));
 	return (1);
-}
-
-/*TODO delete this before final*/
-void	print_matrix(char **matrix)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (matrix[i])
-	{
-		j = 0;
-		while (matrix[i][j])
-		{
-			ft_printf("%c ", matrix[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-	ft_printf("\n");
-}
-
-/*TODO delete this before final*/
-void	printlist(t_list *list)
-{
-	t_list	*temp;
-
-	temp = list;
-	while (temp)
-	{
-		ft_printf("[%i, %i] -> ", ((int *)(temp->content))[0], ((int *)(temp->content))[1]);
-		temp = temp->next;
-	}
-	ft_printf("\n");
 }
 
 void	*ft_lstpop(t_list **list)

@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:45:04 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 16:07:59 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:04:13 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,13 @@ t_map	*get_map(char *path)
 	get_exit_player(&map);
 	map->coll = get_collectibles(matrix);
 	free_matrix(matrix);
-	is_correct(&map);
 	if (is_correct(&map))
-	{
-		ft_printf("worked!");
 		return (map);
-	}
 	else
 	{
 		ft_free_map(map);
 		return (NULL);
 	}
-		
 }
 
 /*This function creates a collectible*/
@@ -108,14 +103,16 @@ void	get_exit_player(t_map **map)
 	int	j;
 
 	i = 0;
+	(*map)->player = NULL;
+	(*map)->exit = NULL;
 	while ((*map)->layout[i])
 	{
 		j = 0;
 		while ((*map)->layout[i][j])
 		{
-			if ((*map)->layout[i][j] == 'P')
+			if ((*map)->layout[i][j] == 'P' && !(*map)->player)
 				(*map)->player = newpar(j, i);
-			if ((*map)->layout[i][j] == 'E')
+			if ((*map)->layout[i][j] == 'E' && !(*map)->exit)
 				(*map)->exit = newpar(j, i);
 			j++;
 		}

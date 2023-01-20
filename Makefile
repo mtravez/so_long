@@ -6,13 +6,13 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2023/01/19 16:17:21 by mtravez          ###   ########.fr        #
+#    Updated: 2023/01/20 15:56:41 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=so_long.a
 
-SRC=so_long.c errors.c maps/map.c maps/extra_functions.c maps/check.c maps/struct_functions.c draw_map.c ft_free_stuff.c move_functions.c
+SRC=so_long.c errors.c maps/map.c maps/extra_functions.c maps/check.c maps/struct_functions.c draw_map.c ft_free_stuff.c move_functions.c initiation.c
 
 OBJ=$(SRC:.c=.o)
 
@@ -21,7 +21,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C libft
 	make -C MLX42
-	@cc $(OBJ) -fsanitize=address libft/libft.a MLX42/libmlx42.a -I include -lglfw -L "/Users/mtravez/.brew/opt/glfw/lib/"
+	@cc $(OBJ) libft/libft.a MLX42/libmlx42.a -I include -lglfw -L "/Users/mtravez/.brew/opt/glfw/lib/"
 	@ar rc $(NAME) $(OBJ) 
 
 clean:

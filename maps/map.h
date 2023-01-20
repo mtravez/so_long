@@ -6,35 +6,35 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:58:05 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 16:11:59 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/19 19:00:03 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
-#define MAP_H
+# define MAP_H
 
 # include "../libft/libft.h"
 
 typedef struct s_par
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 }	t_par;
 
 typedef struct s_map
 {
 	int		length;
-	int 	width;
+	int		width;
 	t_list	*coll;
 	t_par	*exit;
 	t_par	*player;
-	char 	**layout;
+	char	**layout;
 }	t_map;
 
 typedef struct s_collectible
 {
 	void	*coor;
-	int collected;
+	int		collected;
 }	t_collectible;
 
 t_par			*newpar(int x, int y);
@@ -49,7 +49,5 @@ int				how_many_chars(char **matrix, char c);
 char			**ft_matrdup(char **matrix);
 int				check_chars(t_map *map);
 int				check_paths(t_map *map);
-void			print_matrix(char **matrix);//TODO remove
-void			printlist(t_list *list);
 
 #endif

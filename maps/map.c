@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 16:24:25 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/20 15:53:37 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,39 +114,22 @@ int	is_correct(t_map **map)
 
 	rows = 0;
 	while ((*map)->layout[rows])
-	{
-		if (ft_strlen((*map)->layout[rows]) != (*map)->width)
-		{
-			perror("Error, the map isn't rectangular");
-			return (0);
-		}
-		rows++;
-	}
+		if (ft_strlen((*map)->layout[rows++]) != (*map)->width)
+			return (map_error("Error, the map isn't rectangular"));
 	j = 0;
 	while ((*map)->layout[0][j])
 		if ((*map)->layout[0][j] != '1' || (*map)->layout[rows - 1][j++] != '1')
-		{
-			ft_printf("Error, the walls aren't surrounding the map");
-			return (0);
-		}
+			return (map_error("Error, the walls aren't surrounding the map"));
 	j = 0;
 	while ((*map)->layout[j])
-		if ((*map)->layout[j][0] != '1' || (*map)->layout[j++][(*map)->width - 1] != '1')
-		{
-			perror("Error, the walls aren't surrounding the map");
-			return (0);
-		}
+		if ((*map)->layout[j][0] != '1' || \
+		(*map)->layout[j++][(*map)->width - 1] != '1')
+			return (map_error("Error, the walls aren't surrounding the map"));
 	if (!check_chars((*map)))
 		return (0);
 	if (!is_path((*map)->layout, (*map)->player, (*map)->exit))
-	{
-		perror("Error, invalid path");
-		return (0);
-	}
+		return (map_error("Error, invalid path"));
 	if (!is_path_coll((*map)))
-	{
-		perror("Error, not all collectibles are reachabe");
-		return (0);
-	}
+		return (map_error("Error, not all collectibles are reachabe"));
 	return (1);
 }
