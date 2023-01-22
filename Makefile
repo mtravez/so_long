@@ -6,7 +6,7 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2023/01/22 17:48:12 by mtravez          ###   ########.fr        #
+#    Updated: 2023/01/22 19:03:56 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,12 @@ LIBFT=./lib/libft/libft.a
 
 MLX42=./lib/MLX42/libmlx42.a
 
+GLFW=./lib/glfw/glfw-3.3.8.bin.MACOS/lib-x86_64/libglfw3.a
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX42) $(OBJ)
-	@cc $(OBJ) $(FLAGS) $(LIBFT) $(MLX42) -I include -lglfw -L "/Users/mtravez/.brew/opt/glfw/lib/"
+	@cc $(OBJ) $(FLAGS) $(LIBFT) $(MLX42) -I include $(GLFW) -framework Cocoa -framework OpenGL -framework IOKit
 	@ar rc $(NAME) $(OBJ)
 
 $(LIBFT):
