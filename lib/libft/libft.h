@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 14:12:15 by mtravez           #+#    #+#             */
-/*   Updated: 2022/12/08 13:48:58 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/14 20:32:00 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_print_ptr(unsigned long long point);
 
 // get_next_line
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 50
 # endif
 
 char	*get_next_line(int fd);

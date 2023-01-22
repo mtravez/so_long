@@ -6,11 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 18:39:41 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/19 18:57:05 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:47:16 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../src/so_long.h"
 #include "map.h"
 
 int	check_paths(t_map *map)

@@ -6,15 +6,15 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/19 19:09:07 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:48:53 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include "libft/libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
-# include "maps/map.h"
+# include "../lib/libft/libft.h"
+# include "../lib/MLX42/include/MLX42/MLX42.h"
+# include "../maps/map.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
@@ -56,7 +56,7 @@ void	draw_collectibles(t_map *map, t_game *game);
 void	draw_bush(t_map *map, t_game *game);
 void	draw_fences(t_map *map, t_game *game);
 void	draw_ground(t_map *map, t_game *game);
-void	draw_player_and_exit(t_map *map, t_game *game);
+void	draw_player_and_exit(t_game *game);
 void	draw_all(t_map *map, t_game *game);
 int		is_correct(t_map **map);
 t_map	*get_map(char *path);

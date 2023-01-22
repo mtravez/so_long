@@ -6,11 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:51:08 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/15 16:06:56 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:47:10 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../src/so_long.h"
 
 int	how_many_chars(char **matrix, char c)
 {

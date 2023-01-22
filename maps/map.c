@@ -6,11 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/20 15:53:37 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:47:22 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../src/so_long.h"
 
 /*This global constant holds the tuples to add to a x/y coordinate
 for each of the directions*/
@@ -65,7 +65,7 @@ void	adjacent(char **matrix, t_par *cell, t_list **queue)
 	{
 		a = g_directions[i][0] + cell->y;
 		b = g_directions[i][1] + cell->x;
-		if (a >= 0 && b >= 0 && a < rows && b < ft_strlen(matrix[0])
+		if (a >= 0 && b >= 0 && a < rows && b < (int)ft_strlen(matrix[0])
 			&& matrix[a][b] != 'X' && matrix[a][b] != '1')
 			ft_lstadd_back(queue, ft_lstnew(newpar(b, a)));
 		i++;
@@ -110,11 +110,10 @@ int	is_correct(t_map **map)
 {
 	int		rows;
 	int		j;
-	int		i;
 
 	rows = 0;
 	while ((*map)->layout[rows])
-		if (ft_strlen((*map)->layout[rows++]) != (*map)->width)
+		if ((int)ft_strlen((*map)->layout[rows++]) != (*map)->width)
 			return (map_error("Error, the map isn't rectangular"));
 	j = 0;
 	while ((*map)->layout[0][j])

@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:22:06 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/19 19:04:35 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 15:01:18 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define TILE_WIDTH 32
 #define TILE_LENGTH 32
 
-void	draw_player_and_exit(t_map *map, t_game *game)
+void	draw_player_and_exit(t_game *game)
 {
 	int	exit;
 

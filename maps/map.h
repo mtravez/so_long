@@ -6,14 +6,14 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:58:05 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/19 19:00:03 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 15:45:52 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
 
-# include "../libft/libft.h"
+# include "../lib/libft/libft.h"
 
 typedef struct s_par
 {

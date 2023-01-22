@@ -6,11 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:45:04 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/20 16:04:13 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:49:18 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../src/so_long.h"
 
 /*This function creates a new tuple with the corresponding
 variables as parameters

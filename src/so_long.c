@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/20 15:56:46 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:50:42 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_all(t_map *map, t_game *game)
 
 	draw_ground(map, game);
 	draw_bush(map, game);
-	draw_player_and_exit(map, game);
+	draw_player_and_exit(game);
 	draw_collectibles(map, game);
 	draw_fences(map, game);
 	str = ft_itoa(game->steps);
@@ -48,23 +48,18 @@ void	draw_all(t_map *map, t_game *game)
 
 int	main(int argc, char **argv)
 {
-	mlx_texture_t	*texture;
 	t_map			*map;
 	t_game			*game;
-	t_player		*player;
 
 	if (argc != 2 || ft_strlen(argv[1]) < 5 || \
-	ft_strncmp(&argv[1][ft_strlen(argv[1] - 4)], ".ber", 5) != 0)
+	ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 5) != 0)
 	{
 		ft_printf("Invalid path");
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	map = get_map(argv[1]);
 	if (!map)
-	{
-		system("leaks a.out");
 		return (EXIT_FAILURE);
-	}
 	game = init_game(map);
 	if (!game)
 		exit (EXIT_FAILURE);
