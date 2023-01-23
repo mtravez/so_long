@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 18:39:41 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 17:47:16 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 21:12:13 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	analize_chars(char **matrix, char *chars)
 int	check_chars(t_map *map)
 {
 	if (!analize_chars(map->layout, "01CPE"))
-		return (map_error("Error, there's an invalid char in map\n"));
+		return (map_error("Error\nThere's an invalid char in map\n"));
 	if (how_many_chars(map->layout, 'E') != 1)
-		return (map_error("Error, wrong number of exits\n"));
+		return (map_error("Error\nWrong number of exits\n"));
 	if (how_many_chars(map->layout, 'P') != 1)
-		return (map_error("Error, wrong number of player\n"));
+		return (map_error("Error\nWrong number of player\n"));
 	if (!how_many_chars(map->layout, 'C'))
-		return (map_error("Error, not enough collectibles\n"));
+		return (map_error("Error\nNot enough collectibles\n"));
 	return (1);
 }
 

@@ -6,12 +6,14 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 17:50:42 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:29:01 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/*This function takes the key input of the user and runs a 
+function depending of which key was pressed.*/
 void	key_function(mlx_key_data_t keycode, void *param)
 {
 	t_game	*game;
@@ -27,8 +29,14 @@ void	key_function(mlx_key_data_t keycode, void *param)
 		move_down(game);
 	if (keycode.key == MLX_KEY_ESCAPE && keycode.action == 1)
 		mlx_close_window(game->mlx);
+	if (game->map->player->x == game->map->exit->x \
+	&& game->map->player->y == game->map->exit->y)
+		mlx_close_window(game->mlx);
 }
 
+/*This function draws the map, player, exit and collectibles in
+order so it will look correct. For the bonus part, it also writes
+how many pases the player has taken in the upper corner of the map.*/
 void	draw_all(t_map *map, t_game *game)
 {
 	char	*str;
@@ -41,9 +49,6 @@ void	draw_all(t_map *map, t_game *game)
 	str = ft_itoa(game->steps);
 	mlx_put_string(game->mlx, str, game->mlx->width - 35, 10);
 	free(str);
-	if (game->map->player->x == game->map->exit->x \
-	&& game->map->player->y == game->map->exit->y)
-		mlx_close_window(game->mlx);
 }
 
 int	main(int argc, char **argv)
@@ -54,7 +59,7 @@ int	main(int argc, char **argv)
 	if (argc != 2 || ft_strlen(argv[1]) < 5 || \
 	ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 5) != 0)
 	{
-		ft_printf("Invalid path");
+		ft_printf("Error\nInvalid path");
 		return (EXIT_FAILURE);
 	}
 	map = get_map(argv[1]);

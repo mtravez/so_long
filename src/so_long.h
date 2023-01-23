@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 17:48:53 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:34:10 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <errno.h>
 # include <stdio.h>
 
+# define TILE_WIDTH 32
+# define TILE_LENGTH 32
 # define GRASS 0
 # define H_FENCE 1
 # define V_FENCE 2

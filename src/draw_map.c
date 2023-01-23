@@ -6,13 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:22:06 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 15:01:18 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:34:00 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#define TILE_WIDTH 32
-#define TILE_LENGTH 32
 
 void	draw_player_and_exit(t_game *game)
 {
