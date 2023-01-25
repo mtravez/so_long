@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:45:04 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 17:49:18 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/25 13:44:16 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,13 @@ t_map	*get_map(char *path)
 	}
 }
 
-/*This function creates a collectible*/
-t_collectible	*new_collectible(int x, int y)
-{
-	t_collectible	*newone;
-
-	newone = malloc(sizeof(t_collectible *));
-	if (!newone)
-		return (NULL);
-	newone->coor = newpar(x, y);
-	newone->collected = 0;
-	return (newone);
-}
-
-/*This function creates a list of collectibles*/
+/*This function creates a list of collectibles.*/
 t_list	*get_collectibles(char **map)
 {
-	int				i;
-	int				j;
-	t_list			*collect;
-	t_collectible	*temp;
+	int		i;
+	int		j;
+	t_list	*collect;
+	t_par	*temp;
 
 	collect = NULL;
 	temp = NULL;
@@ -87,7 +74,7 @@ t_list	*get_collectibles(char **map)
 		{
 			if (map[i][j] == 'C')
 			{
-				temp = new_collectible(j, i);
+				temp = newpar(j, i);
 				ft_lstadd_back(&collect, ft_lstnew(temp));
 			}
 			j++;

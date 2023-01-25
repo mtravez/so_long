@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:58:05 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 15:45:52 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/25 14:49:11 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,8 @@ typedef struct s_map
 	char	**layout;
 }	t_map;
 
-typedef struct s_collectible
-{
-	void	*coor;
-	int		collected;
-}	t_collectible;
-
 t_par			*newpar(int x, int y);
 t_map			*get_map(char *path);
-t_collectible	*new_collectible(int x, int y);
 t_list			*get_collectibles(char **map);
 void			get_exit_player(t_map **map);
 char			**get_map_matrix(char *path);

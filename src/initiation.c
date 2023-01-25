@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:33:55 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/19 16:50:26 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/25 14:44:22 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static t_player	*init_player(void *mlx)
 	mlx_image_t	**images;
 	t_player	*player;
 
-	images = malloc(sizeof(mlx_image_t *) * 4);
-	player = malloc(sizeof(t_player *));
+	player = (t_player *)malloc(sizeof(t_player *) + sizeof(mlx_image_t **));
+	images = (mlx_image_t **)malloc(sizeof(mlx_image_t *) * 4);
 	if (!images || !player)
 		return (NULL);
 	images[0] = png_to_image("resources/BichoRight.png", mlx);

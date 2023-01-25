@@ -6,19 +6,35 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/23 14:29:01 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/25 14:47:31 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	draw_counter(t_game *game, int last_steps)
+{
+	char	*str;
+
+	if (game->steps != last_steps)
+	{
+		str = ft_itoa(game->steps);
+		mlx_delete_image(game->mlx, game->counter);
+		game->counter = mlx_put_string(game->mlx, str, \
+		game->mlx->width - 35, 10);
+		free(str);
+	}
+}
 
 /*This function takes the key input of the user and runs a 
 function depending of which key was pressed.*/
 void	key_function(mlx_key_data_t keycode, void *param)
 {
 	t_game	*game;
+	int		last_steps;
 
 	game = param;
+	last_steps = game->steps;
 	if (keycode.key == MLX_KEY_LEFT && keycode.action == 1)
 		move_left(game);
 	if (keycode.key == MLX_KEY_RIGHT && keycode.action == 1)
@@ -32,6 +48,7 @@ void	key_function(mlx_key_data_t keycode, void *param)
 	if (game->map->player->x == game->map->exit->x \
 	&& game->map->player->y == game->map->exit->y)
 		mlx_close_window(game->mlx);
+	draw_counter(game, last_steps);
 }
 
 /*This function draws the map, player, exit and collectibles in
@@ -39,16 +56,11 @@ order so it will look correct. For the bonus part, it also writes
 how many pases the player has taken in the upper corner of the map.*/
 void	draw_all(t_map *map, t_game *game)
 {
-	char	*str;
-
 	draw_ground(map, game);
 	draw_bush(map, game);
 	draw_player_and_exit(game);
 	draw_collectibles(map, game);
 	draw_fences(map, game);
-	str = ft_itoa(game->steps);
-	mlx_put_string(game->mlx, str, game->mlx->width - 35, 10);
-	free(str);
 }
 
 int	main(int argc, char **argv)
@@ -69,6 +81,7 @@ int	main(int argc, char **argv)
 	if (!game)
 		exit (EXIT_FAILURE);
 	draw_all(map, game);
+	draw_counter(game, 1);
 	mlx_key_hook(game->mlx, &key_function, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);

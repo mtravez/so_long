@@ -6,7 +6,7 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2023/01/22 19:03:56 by mtravez          ###   ########.fr        #
+#    Updated: 2023/01/25 13:44:07 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ GLFW=./lib/glfw/glfw-3.3.8.bin.MACOS/lib-x86_64/libglfw3.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX42) $(OBJ)
-	@cc $(OBJ) $(FLAGS) $(LIBFT) $(MLX42) -I include $(GLFW) -framework Cocoa -framework OpenGL -framework IOKit
+	@cc $(SRC) $(FLAGS) $(LIBFT) $(MLX42) -I include $(GLFW) -framework Cocoa -framework OpenGL -framework IOKit
 	@ar rc $(NAME) $(OBJ)
 
 $(LIBFT):

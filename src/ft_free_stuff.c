@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:56:26 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 19:32:41 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/25 12:48:19 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,11 @@ void	free_list(t_list *head)
 	}
 }
 
-/*This function frees the contents of a collectible structure
-inside of a linked list and then it frees the list too*/
-void	free_list_col(t_list *head)
-{
-	t_list			*temp;
-	t_collectible	*cont;
-
-	temp = head;
-	while (temp != NULL)
-	{
-		cont = (t_collectible *) temp->content;
-		free(cont->coor);
-		free(temp->content);
-		head = temp->next;
-		free(temp);
-		temp = head;
-	}
-}
-
 /*This function frees all the contents of a map structure*/
 void	ft_free_map(t_map *map)
 {
 	if (map->coll)
-		free_list_col(map->coll);
+		free_list(map->coll);
 	if (map->exit != NULL)
 		free(map->exit);
 	if (map->player != NULL)
