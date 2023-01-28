@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 21:11:31 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/28 14:28:05 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**get_map_matrix(char *path)
 	char	**matrix;
 
 	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return ((char **)map_error("Error\nFailed to create the map."));
 	altogether = NULL;
 	line = get_next_line(fd);
 	if (!line)
@@ -114,21 +116,23 @@ int	is_correct(t_map **map)
 	rows = 0;
 	while ((*map)->layout[rows])
 		if ((int)ft_strlen((*map)->layout[rows++]) != (*map)->width)
-			return (map_error("Error\n The map isn't rectangular"));
+			return ((int)map_error("Error\nThe map isn't rectangular"));
 	j = 0;
 	while ((*map)->layout[0][j])
 		if ((*map)->layout[0][j] != '1' || (*map)->layout[rows - 1][j++] != '1')
-			return (map_error("Error\n The walls aren't surrounding the map"));
+			return ((int)map_error \
+			("Error\nThe walls aren't surrounding the map"));
 	j = 0;
 	while ((*map)->layout[j])
 		if ((*map)->layout[j][0] != '1' || \
 		(*map)->layout[j++][(*map)->width - 1] != '1')
-			return (map_error("Error\n The walls aren't surrounding the map"));
+			return ((int)map_error \
+			("Error\nThe walls aren't surrounding the map"));
 	if (!check_chars((*map)))
 		return (0);
 	if (!is_path((*map)->layout, (*map)->player, (*map)->exit))
-		return (map_error("Error\nThere's no path from player to exit"));
+		return ((int)map_error("Error\nThere's no path from player to exit"));
 	if (!is_path_coll((*map)))
-		return (map_error("Error\nNot all collectibles are reachabe"));
+		return ((int)map_error("Error\nNot all collectibles are reachabe"));
 	return (1);
 }

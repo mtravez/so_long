@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/25 14:32:01 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/26 14:11:07 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_game
 	mlx_image_t	*counter;
 }	t_game;
 
-int		map_error(char *message);
+void	*map_error(char *message);
 
 /*This function draws the map*/
 void	draw_collectibles(t_map *map, t_game *game);

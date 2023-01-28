@@ -6,13 +6,15 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:29:56 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/25 14:47:31 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/28 14:24:45 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	draw_counter(t_game *game, int last_steps)
+/*This function draws the counter for the steps the player has
+taken.*/
+static void	draw_counter(t_game *game, int last_steps)
 {
 	char	*str;
 
@@ -28,7 +30,7 @@ void	draw_counter(t_game *game, int last_steps)
 
 /*This function takes the key input of the user and runs a 
 function depending of which key was pressed.*/
-void	key_function(mlx_key_data_t keycode, void *param)
+static void	key_function(mlx_key_data_t keycode, void *param)
 {
 	t_game	*game;
 	int		last_steps;
@@ -46,7 +48,8 @@ void	key_function(mlx_key_data_t keycode, void *param)
 	if (keycode.key == MLX_KEY_ESCAPE && keycode.action == 1)
 		mlx_close_window(game->mlx);
 	if (game->map->player->x == game->map->exit->x \
-	&& game->map->player->y == game->map->exit->y)
+	&& game->map->player->y == game->map->exit->y \
+	&& game->player->collectibles == game->total_col)
 		mlx_close_window(game->mlx);
 	draw_counter(game, last_steps);
 }
@@ -69,7 +72,9 @@ int	main(int argc, char **argv)
 	t_game			*game;
 
 	if (argc != 2 || ft_strlen(argv[1]) < 5 || \
-	ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 5) != 0)
+	ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 5) != 0 || \
+	ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) != \
+	&argv[1][ft_strlen(argv[1]) - 4])
 	{
 		ft_printf("Error\nInvalid path");
 		return (EXIT_FAILURE);

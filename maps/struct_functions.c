@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:45:04 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/25 13:44:16 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/26 14:37:58 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_map	*get_map(char *path)
 	int		i;
 
 	map = malloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
 	matrix = get_map_matrix(path);
+	if (!matrix || !map)
+		return (NULL);
 	i = 0;
 	while (matrix[i])
 		i++;

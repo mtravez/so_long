@@ -6,17 +6,15 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:47:15 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/23 14:24:57 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/26 13:48:55 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	can_move(t_game *game, char c)
+int	can_move(char c)
 {
 	if (c == '1')
-		return (0);
-	if (c == 'E' && game->player->collectibles != game->total_col)
 		return (0);
 	return (1);
 }
@@ -35,7 +33,7 @@ void	move_left(t_game *game)
 		c = game->map->layout[game->map->player->y][game->map->player->x - 1];
 	else
 		return ;
-	if (!can_move(game, c))
+	if (!can_move(c))
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
@@ -68,7 +66,7 @@ void	move_right(t_game *game)
 		c = game->map->layout[game->map->player->y][game->map->player->x + 1];
 	else
 		return ;
-	if (!can_move(game, c))
+	if (!can_move(c))
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
@@ -101,7 +99,7 @@ void	move_up(t_game *game)
 		c = game->map->layout[game->map->player->y - 1][game->map->player->x];
 	else
 		return ;
-	if (!can_move(game, c))
+	if (!can_move(c))
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
@@ -134,7 +132,7 @@ void	move_down(t_game *game)
 		c = game->map->layout[game->map->player->y + 1][game->map->player->x];
 	else
 		return ;
-	if (!can_move(game, c))
+	if (!can_move(c))
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
