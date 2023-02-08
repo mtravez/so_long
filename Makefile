@@ -6,7 +6,7 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2023/02/08 12:57:54 by mtravez          ###   ########.fr        #
+#    Updated: 2023/02/08 18:11:18 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ MLX42 = ./lib/MLX42/libmlx42.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX42) $(OBJ)
-	@cc $(SRC) $(FLAGS) $(LIBFT) $(MLX42) -lglfw -L "$(shell brew --prefix glfw)/lib/" -o $(NAME)
+	@cc $(OBJ) $(FLAGS) $(LIBFT) $(MLX42) -lglfw -L "$(shell brew --prefix glfw)/lib/" -o $(NAME)
 
 $(LIBFT):
 	@make -C ./lib/libft
@@ -47,3 +47,9 @@ fclean: clean
 re: fclean all 
 
 .PHONY: all clean fclean re
+
+# brew list
+# brew --version
+# rm -rf $HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $HOME/.brew && echo 'export PATH=$HOME/.brew/bin:$PATH' >> $HOME/.zshrc && source $HOME/.zshrc && brew update
+# brew update
+# brew install glfw

@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:46:13 by mtravez           #+#    #+#             */
-/*   Updated: 2023/02/08 13:14:51 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/02/08 19:36:05 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	adjacent(char **matrix, t_par *cell, t_list **queue)
 	}
 }
 
+/*This function removes a cell from a list and reasigns the 
+adjacent cells accordingly*/
 void	remove_cell(t_list **head, t_list *to_remove)
 {
 	t_list	*temp;
@@ -65,6 +67,8 @@ void	remove_cell(t_list **head, t_list *to_remove)
 	}
 }
 
+/*This function checks every par in the list for a match with 
+the cell par.*/
 int	check_points(t_par *cell, t_list **points)
 {
 	t_list	*temp;
@@ -118,6 +122,9 @@ int	is_path(char **matrix, t_par *start, t_list **points)
 	return (0);
 }
 
+/*This function checks to see if there is a path from
+the player to the exit and every collectible in the
+given map.*/
 int	is_path_ultimate(t_map *map)
 {
 	ft_lstadd_back(&map->coll, ft_lstnew(newpar(map->exit->x, map->exit->y)));
