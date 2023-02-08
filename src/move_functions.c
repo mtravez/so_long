@@ -6,18 +6,11 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:47:15 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/26 13:48:55 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/31 12:53:17 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	can_move(char c)
-{
-	if (c == '1')
-		return (0);
-	return (1);
-}
 
 /*This function checks the player's position in the map and whether
 the left adjacent cell is neither a wall or the exit (if not all
@@ -33,7 +26,7 @@ void	move_left(t_game *game)
 		c = game->map->layout[game->map->player->y][game->map->player->x - 1];
 	else
 		return ;
-	if (!can_move(c))
+	if (c == '1')
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
@@ -66,7 +59,7 @@ void	move_right(t_game *game)
 		c = game->map->layout[game->map->player->y][game->map->player->x + 1];
 	else
 		return ;
-	if (!can_move(c))
+	if (c == '1')
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
@@ -99,7 +92,7 @@ void	move_up(t_game *game)
 		c = game->map->layout[game->map->player->y - 1][game->map->player->x];
 	else
 		return ;
-	if (!can_move(c))
+	if (c == '1')
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;
@@ -132,7 +125,7 @@ void	move_down(t_game *game)
 		c = game->map->layout[game->map->player->y + 1][game->map->player->x];
 	else
 		return ;
-	if (!can_move(c))
+	if (c == '1')
 		return ;
 	if (c == 'C')
 		game->player->collectibles++;

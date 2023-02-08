@@ -6,12 +6,14 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:51:08 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/25 12:20:08 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/02/08 13:13:45 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/so_long.h"
 
+/*This function returns how many chars c are in the
+character matrix.*/
 int	how_many_chars(char **matrix, char c)
 {
 	int	i;
@@ -34,28 +36,7 @@ int	how_many_chars(char **matrix, char c)
 	return (count);
 }
 
-int	is_path_coll(t_map *map)
-{
-	t_list	*temp;
-	t_par	*current;
-	char	**layout;
-
-	temp = map->coll;
-	while (temp)
-	{
-		layout = ft_matrdup(map->layout);
-		current = temp->content;
-		if (!is_path(layout, map->player, current))
-		{
-			free_matrix(layout);
-			return (0);
-		}
-		temp = temp->next;
-		free_matrix(layout);
-	}
-	return (1);
-}
-
+/*This function duplicates a character matrix*/
 char	**ft_matrdup(char **matrix)
 {
 	char	**dup;

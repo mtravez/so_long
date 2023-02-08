@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   path_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 14:55:47 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/28 14:28:05 by mtravez          ###   ########.fr       */
+/*   Created: 2023/02/08 11:46:13 by mtravez           #+#    #+#             */
+/*   Updated: 2023/02/08 13:14:51 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,6 @@
 /*This global constant holds the tuples to add to a x/y coordinate
 for each of the directions*/
 const int	g_directions[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
-/*This function reads the given path and transforms the contents of the 
-file into a two dimentional character matrix
-@param path path to the file*/
-char	**get_map_matrix(char *path)
-{
-	char	*line;
-	int		fd;
-	char	*altogether;
-	char	**matrix;
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return ((char **)map_error("Error\nFailed to create the map."));
-	altogether = NULL;
-	line = get_next_line(fd);
-	if (!line)
-	{
-		perror("Error\nInvalid file");
-		return (NULL);
-	}
-	while (line)
-	{
-		altogether = ft_strjoin_gnl(altogether, line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	matrix = ft_split(altogether, '\n');
-	free(altogether);
-	return (matrix);
-}
 
 /*This function checks each adjacent cell to the given cell on 
 the matrix for a valid path and if it finds it, it will add it to the queue
@@ -74,6 +43,47 @@ void	adjacent(char **matrix, t_par *cell, t_list **queue)
 	}
 }
 
+void	remove_cell(t_list **head, t_list *to_remove)
+{
+	t_list	*temp;
+
+	temp = *head;
+	if (to_remove == *head)
+	{
+		*head = to_remove->next;
+		free(to_remove->content);
+		free(to_remove);
+		return ;
+	}
+	while (temp && temp->next != to_remove)
+		temp = temp->next;
+	if (temp)
+	{
+		temp->next = to_remove->next;
+		free(to_remove->content);
+		free(to_remove);
+	}
+}
+
+int	check_points(t_par *cell, t_list **points)
+{
+	t_list	*temp;
+	t_par	*coor;
+
+	temp = *points;
+	while (temp)
+	{
+		coor = (t_par *)temp->content;
+		if (coor->x == cell->x && coor->y == cell->y)
+		{
+			remove_cell(points, temp);
+			return (1);
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
+
 /*This function checks to see if there is a path from
 the starting point (start) to the end point (end) in the
 given matrix. It creates a queue and adds the start point
@@ -81,7 +91,7 @@ to it. It then iterates through the queue, marking off
 each point it visits with an 'X' and adding any adjacent points
 to the queue. If it reaches the end point,
 it returns 1, otherwise it returns 0.*/
-int	is_path(char **matrix, t_par *start, t_par *end)
+int	is_path(char **matrix, t_par *start, t_list **points)
 {
 	t_list	*queue;
 	t_par	*temp;
@@ -93,7 +103,7 @@ int	is_path(char **matrix, t_par *start, t_par *end)
 	{
 		temp = (t_par *) ft_lstpop(&queue);
 		layout[temp->y][temp->x] = 'X';
-		if (temp->x == end->x && temp->y == end->y)
+		if (check_points(temp, points) && !(*points))
 		{
 			free(temp);
 			free_list(queue);
@@ -108,31 +118,8 @@ int	is_path(char **matrix, t_par *start, t_par *end)
 	return (0);
 }
 
-int	is_correct(t_map **map)
+int	is_path_ultimate(t_map *map)
 {
-	int		rows;
-	int		j;
-
-	rows = 0;
-	while ((*map)->layout[rows])
-		if ((int)ft_strlen((*map)->layout[rows++]) != (*map)->width)
-			return ((int)map_error("Error\nThe map isn't rectangular"));
-	j = 0;
-	while ((*map)->layout[0][j])
-		if ((*map)->layout[0][j] != '1' || (*map)->layout[rows - 1][j++] != '1')
-			return ((int)map_error \
-			("Error\nThe walls aren't surrounding the map"));
-	j = 0;
-	while ((*map)->layout[j])
-		if ((*map)->layout[j][0] != '1' || \
-		(*map)->layout[j++][(*map)->width - 1] != '1')
-			return ((int)map_error \
-			("Error\nThe walls aren't surrounding the map"));
-	if (!check_chars((*map)))
-		return (0);
-	if (!is_path((*map)->layout, (*map)->player, (*map)->exit))
-		return ((int)map_error("Error\nThere's no path from player to exit"));
-	if (!is_path_coll((*map)))
-		return ((int)map_error("Error\nNot all collectibles are reachabe"));
-	return (1);
+	ft_lstadd_back(&map->coll, ft_lstnew(newpar(map->exit->x, map->exit->y)));
+	return (is_path(map->layout, map->player, &map->coll));
 }

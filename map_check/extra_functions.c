@@ -6,26 +6,15 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 18:39:41 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/26 14:12:31 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/31 12:48:21 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/so_long.h"
 #include "map.h"
 
-int	check_paths(t_map *map)
-{
-	char	**matrix;
-
-	matrix = ft_matrdup(map->layout);
-	if (!is_path(matrix, map->player, map->exit))
-		return (0);
-	free(matrix);
-	if (!is_path_coll(map))
-		return (0);
-	return (1);
-}
-
+/*This function checks if every character in matrix is
+also one of the characters in chars*/
 int	analize_chars(char **matrix, char *chars)
 {
 	int	i;
@@ -54,6 +43,9 @@ int	analize_chars(char **matrix, char *chars)
 	return (1);
 }
 
+/*This function checks that every character in the map is valid, 
+that there isn't more than one exit, morre than one player, and at
+least one collectible*/
 int	check_chars(t_map *map)
 {
 	if (!analize_chars(map->layout, "01CPE"))
@@ -67,6 +59,9 @@ int	check_chars(t_map *map)
 	return (1);
 }
 
+/*This function frees the first chracter of a list, moves the head
+of the list to the next cell, and returns the content of the freed
+cell*/
 void	*ft_lstpop(t_list **list)
 {
 	void	*content;

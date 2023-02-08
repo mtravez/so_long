@@ -6,12 +6,13 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:22:06 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/22 19:34:00 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/01/31 12:51:45 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/*This function draws the player and the exit on the window*/
 void	draw_player_and_exit(t_game *game)
 {
 	int	exit;
@@ -28,6 +29,7 @@ void	draw_player_and_exit(t_game *game)
 		, game->map->player->y * TILE_LENGTH + TILE_LENGTH / 2);
 }
 
+/*This function draws every square of the ground of the map in the widndow*/
 void	draw_ground(t_map *map, t_game *game)
 {
 	int	i;
@@ -47,6 +49,8 @@ void	draw_ground(t_map *map, t_game *game)
 	}
 }
 
+/*This function draws all the vertical and horizontal fences on the
+window*/
 void	draw_fences(t_map *map, t_game *game)
 {
 	int	i;
@@ -73,6 +77,7 @@ void	draw_fences(t_map *map, t_game *game)
 	}
 }
 
+/*This function draws the bushes on the window*/
 void	draw_bush(t_map *map, t_game *game)
 {
 	char	c;
@@ -98,6 +103,7 @@ void	draw_bush(t_map *map, t_game *game)
 	}
 }
 
+/*This function draws all the collectibles on the window*/
 void	draw_collectibles(t_map *map, t_game *game)
 {
 	char	c;

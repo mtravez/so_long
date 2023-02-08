@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:33:55 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/26 14:32:33 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/02/08 12:42:53 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static t_player	*init_player(void *mlx)
 	images = (mlx_image_t **)malloc(sizeof(mlx_image_t *) * 4);
 	if (!images || !player)
 		return (NULL);
-	images[0] = png_to_image("resources/BichoRight.png", mlx);
-	images[1] = png_to_image("resources/BichoLeft.png", mlx);
-	images[2] = png_to_image("resources/BichoFront.png", mlx);
-	images[3] = png_to_image("resources/BichoBack.png", mlx);
+	images[0] = png_to_image("textures/BichoRight.png", mlx);
+	images[1] = png_to_image("textures/BichoLeft.png", mlx);
+	images[2] = png_to_image("textures/BichoFront.png", mlx);
+	images[3] = png_to_image("textures/BichoBack.png", mlx);
 	player->image = images;
 	player->collectibles = 0;
 	player->direction = 0;
@@ -56,8 +56,8 @@ static mlx_image_t	**init_exit(void *mlx)
 	exit = malloc(sizeof(mlx_image_t *) * 2);
 	if (!exit)
 		return (NULL);
-	exit[0] = png_to_image("resources/HoleClose.png", mlx);
-	exit[1] = png_to_image("resources/HoleOpen.png", mlx);
+	exit[0] = png_to_image("textures/HoleClose.png", mlx);
+	exit[1] = png_to_image("textures/HoleOpen.png", mlx);
 	return (exit);
 }
 
@@ -70,11 +70,11 @@ static mlx_image_t	**init_map(void *mlx)
 	map_img = malloc(sizeof(mlx_image_t *) * 5);
 	if (!map_img)
 		return (NULL);
-	map_img[0] = png_to_image("resources/grass.png", mlx);
-	map_img[1] = png_to_image("resources/fence.png", mlx);
-	map_img[2] = png_to_image("resources/fence_v.png", mlx);
-	map_img[3] = png_to_image("resources/chicken.png", mlx);
-	map_img[4] = png_to_image("resources/bush.png", mlx);
+	map_img[0] = png_to_image("textures/grass.png", mlx);
+	map_img[1] = png_to_image("textures/fence.png", mlx);
+	map_img[2] = png_to_image("textures/fence_v.png", mlx);
+	map_img[3] = png_to_image("textures/chicken.png", mlx);
+	map_img[4] = png_to_image("textures/bush.png", mlx);
 	return (map_img);
 }
 
@@ -99,6 +99,6 @@ t_game	*init_game(t_map *map)
 	if (!game->player || !game->exit || !game->map_image)
 		return (NULL);
 	game->steps = 0;
-	game->total_col = ft_lstsize(map->coll);
+	game->total_col = map->coll_nr;
 	return (game);
 }

@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:45:04 by mtravez           #+#    #+#             */
-/*   Updated: 2023/01/26 14:37:58 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/02/08 12:42:14 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_map	*get_map(char *path)
 	map->layout = ft_matrdup(matrix);
 	get_exit_player(&map);
 	map->coll = get_collectibles(matrix);
+	map->coll_nr = ft_lstsize(map->coll);
 	free_matrix(matrix);
 	if (is_correct(&map))
 		return (map);
@@ -84,6 +85,7 @@ t_list	*get_collectibles(char **map)
 	return (collect);
 }
 
+/*This function initializes the player and exit on the map*/
 void	get_exit_player(t_map **map)
 {
 	int	i;
