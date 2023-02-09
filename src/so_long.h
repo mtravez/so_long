@@ -6,7 +6,7 @@
 /*   By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:13:59 by mtravez           #+#    #+#             */
-/*   Updated: 2023/02/08 11:12:37 by mtravez          ###   ########.fr       */
+/*   Updated: 2023/02/09 12:39:15 by mtravez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,29 @@
 
 # define TILE_WIDTH 32
 # define TILE_LENGTH 32
-# define GRASS 0
-# define H_FENCE 1
-# define V_FENCE 2
-# define CHICKEN 3
-# define BUSH 4
-# define EXIT 0
-# define EXIT_OPEN 1
-# define Z_D 0
-# define Z_I 1
-# define Z_F 2
-# define Z_A 3
+
+enum	e_details
+{
+	GRASS,
+	H_FENCE,
+	V_FENCE,
+	CHICKEN,
+	BUSH
+};
+
+enum	e_fox
+{
+	Z_D,
+	Z_I,
+	Z_F,
+	Z_A
+};
+
+enum e_exit
+{
+	EXIT,
+	EXIT_OPEN
+};
 
 typedef struct s_player
 {

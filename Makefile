@@ -6,7 +6,7 @@
 #    By: mtravez <mtravez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 19:41:52 by mtravez           #+#    #+#              #
-#    Updated: 2023/02/08 18:11:18 by mtravez          ###   ########.fr        #
+#    Updated: 2023/02/09 12:45:38 by mtravez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,11 @@ fclean: clean
 	@make fclean -C ./lib/libft
 	@make fclean -C ./lib/MLX42
 
-re: fclean all 
+re: fclean all
 
-.PHONY: all clean fclean re
+bonus: $(NAME)
+
+.PHONY: all clean fclean re bonus
 
 # brew list
 # brew --version
